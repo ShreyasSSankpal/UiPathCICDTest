@@ -1,0 +1,11 @@
+$ProjectJsonObject = (Get-Content $(ProjectJsonPath)) -join
+"`n" | ConvertFrom-Json
+$ProjectVersion =$ProjectJsonObject.projectVersion
+$projectVersionTokens = $ProjectVersion.Split(".")
+$major = $projectVersionTokens[0]
+$minor = $projectVersionTokens[1]
+$revNumber = git rev-list HEAD --count
+Write-Output ("##vso[task.setvariable variable=Major;]$major")
+Write-Output ("##vso[task.setvariable variable=Minor;]$minor")
+Write-Output ("##vso[task.setvariable
+variable=RevisionNumber;]$revNumber")
